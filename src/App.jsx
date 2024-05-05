@@ -4,6 +4,7 @@ import './App.css'
 function App() {
   const [input, setInput] = useState({
     data: "",
+    pembulatan: "",
   })
   const [sortedNumbers, setSortedNumbers] = useState([]);
   const [rentangan, setRentangan] = useState(0);
@@ -52,7 +53,12 @@ function App() {
   const hitungKelas = () => {
     const n = sortedNumbers.length;
     const log = Math.log10(n);
-    const k = Math.ceil(1 + 3.322 * log);
+    let k = 0;
+    if(input.pembulatan == "bawah") {
+      k = Math.floor(1 + 3.322 * log);
+    }else{
+      k = Math.ceil(1 + 3.322 * log);
+    }
     const range = rentangan;
     const classWidth = Math.ceil(range / k);
     const min = sortedNumbers[0];
@@ -92,11 +98,24 @@ function App() {
     setFrequencies(frequencies);
   }
 
+  function roundNumber(num) {
+    const decimal = num - Math.floor(num);
+    return decimal < 0.5 ? Math.floor(num) : Math.ceil(num);
+  }
+
   const handleReset = () => {
     setInput({
       data: "",
+      pembulatan: "",
     })
-    setSortedNumbers([]);
+    setRentangan(0);
+    setJumlahKelas(0);
+    setPanjangKelas(0);
+    setN(0);
+    setLogN(0);
+    setKelas([]);
+    setFrequencies([]);
+    setSubmitted(false);
   }
 
   return (
@@ -104,6 +123,14 @@ function App() {
       <h2>Statistika Kalkulator</h2>
       <form onSubmit={handleSubmit}>
         <textarea onChange={handleInput} name="data" id="" rows={8}></textarea>
+        <br />
+        <div>
+          <input onChange={handleInput} type="radio" name="pembulatan" id="r1" value="bawah"/>
+          <label htmlFor="r1">Bulat kebawah</label>
+          <input onChange={handleInput} type="radio" name="pembulatan" id="r2" value="atas"/>
+          <label htmlFor="r2">Bulat keatas</label>
+        </div>
+        <br />
         <button type='submit'>Hitung</button>
         <button type='reset' onClick={handleReset}>Reset</button>
       </form>
