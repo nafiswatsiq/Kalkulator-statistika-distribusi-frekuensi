@@ -13,6 +13,7 @@ function App() {
   const [logN, setLogN] = useState(0);
   const [kelas, setKelas] = useState([]);
   const [frequencies, setFrequencies] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleInput = (e) => {
     const { name, value } = e.target
@@ -27,6 +28,7 @@ function App() {
     sorting()
     hitungRentangan()
     hitungKelas()
+    setSubmitted(true)
   }
 
   const sorting = () => {
@@ -106,6 +108,7 @@ function App() {
         <button type='reset' onClick={handleReset}>Reset</button>
       </form>
 
+      {submitted && (
       <div>
         <h3>Hasil</h3>
         <div style={{ display: 'grid',gridTemplateColumns: 'repeat(10, minmax(0, 1fr))' }}>
@@ -158,6 +161,7 @@ function App() {
           </tbody>
         </table>
       </div>
+      )}
     </>
   )
 }
