@@ -78,9 +78,9 @@ function App() {
       lowerBound = upperBound + 1;
       upperBound = lowerBound + classWidth - 1;
 
-      if (upperBound > max) {
-        upperBound = max;
-      }
+      // if (upperBound > max) {
+      //   upperBound = max;
+      // }
     }
 
     const frequencies = new Array(k).fill(0);
@@ -175,6 +175,7 @@ function App() {
               <th>Rentang</th>
               <th>Frekuensi</th>
               <th>Titik Tengah</th>
+              <th>Persentase</th>
             </tr>
           </thead>
           <tbody>
@@ -183,6 +184,7 @@ function App() {
                 <td>{item.batasBawah} - {item.batasAtas}</td>
                 <td>{frequencies[index]}</td>
                 <td>{((item.batasBawah + item.batasAtas) / 2).toFixed(1)}</td>
+                <td>{((frequencies[index] / n) * 100).toFixed(0)}%</td>
               </tr>
             ))}
           </tbody>
